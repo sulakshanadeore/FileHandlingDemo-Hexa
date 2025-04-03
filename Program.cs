@@ -23,11 +23,78 @@ internal class Program
 
         //File.Move("file1.txt", "D:\\AllDemos\\HexaMarch\\FileHandlingDemo\\obj\\filemoved.txt");
 
-        FileInfo fi = new FileInfo("file2.txt");
-        Console.WriteLine(fi.Extension);
-        Console.WriteLine(fi.CreationTime);
-        Console.WriteLine(fi.DirectoryName);
-        Console.WriteLine(fi.FullName);
-fi.Create(FileMode.Create,FileSystemRights.FullControl,FileShare.ReadWrite,10,FileOptions.WriteThrough,null);
+        //        FileInfo fi = new FileInfo("file2.txt");
+        //        Console.WriteLine(fi.Extension);
+        //        Console.WriteLine(fi.CreationTime);
+        //        Console.WriteLine(fi.DirectoryName);
+        //        Console.WriteLine(fi.FullName);
+        //fi.Create(FileMode.Create,FileSystemRights.FullControl,FileShare.ReadWrite,10,FileOptions.WriteThrough,null);
+
+                CreateAndWriteToTheTextFileUsingStreamWriter();
+
+        //OpenAndReadFromTextFileUsingStreamReader();
+
+
+
+
+        //FileStream fs=new FileStream("D:\\AllDemos\\HexaMarch",)
+
+
+    }
+
+    private static void OpenAndReadFromTextFileUsingStreamReader()
+    {
+        FileStream fs = null;
+        StreamReader reader = null;
+        try
+        {
+            fs = new FileStream(@"D:\AllDemos\HexaMarch\firstfile.txt", FileMode.Open, FileAccess.Read);
+            reader = new StreamReader(fs);
+
+            string filecontents = reader.ReadToEnd();
+            Console.WriteLine(filecontents);
+
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message); ;
+        }
+        finally
+        {
+            reader.Close();
+            reader.Dispose();
+            fs.Close();
+            fs.Dispose();
+        }
+    }
+
+    private static void CreateAndWriteToTheTextFileUsingStreamWriter()
+    {
+        FileStream fs = null;
+        StreamWriter writer = null;
+        try
+        {
+            fs = new FileStream(@"D:\AllDemos\HexaMarch\firstfile.txt", FileMode.Create, FileAccess.Write);
+            
+            writer = new StreamWriter(fs);
+            writer.AutoFlush = true;
+            string s = "Writing data to the file";
+            writer.WriteLine(s);
+            Console.WriteLine("File created successfully......");
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex.Message); ;
+        }
+        finally
+        {
+            //writer.Flush();
+            writer.Close();
+            writer.Dispose();
+            fs.Close();
+            fs.Dispose();
+        }
     }
 }
